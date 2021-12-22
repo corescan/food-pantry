@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+  background-color: #433F52;
+  border: 1px solid #aaa;
+  border-radius: 7px;
+  height: 48px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.percent {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: #ccc;
+  font-family: helvetica;
+  font-size: 18px;
+  line-height: 48px;
+}
+
+.bar {
+  position: absolute;
+  height: 48px;
+  top: 0;
+  left: 0px;
+}

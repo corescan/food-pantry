@@ -1,0 +1,53 @@
+.pager_item {
+  display: flex;
+  align-items: start;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 2px;
+}
+
+.pager_item:hover {
+  border-color: #3BCEAC;
+}
+
+.pager_item:nth-child(odd) {
+  background-color: #482555;
+}
+
+.pager_item span {
+  display: inline-block;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.id {
+  width: 48px;
+  font-size: 14px;
+  color: #aaa;
+  font-weight: bold;
+}
+.id.active {
+  color: #FFDF75;
+}
+
+.name {
+  width: 181px;
+  color: #ddd;
+  padding-left: 8px;
+}
+
+.phone {
+  width: 94px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.address {
+  padding-left: 8px;
+  color: #ddd;
+  font-size: 14px;
+  width: 201px;
+}

@@ -1,0 +1,108 @@
+.container {
+  font-size: 11px;
+  width: 248px;
+  background-color: #482555;
+  padding: 8px;
+  margin: 2px 0;
+  border: 2px solid #AAA;
+  border-radius: 4px;
+  box-sizing: content-box;
+  box-shadow: 1px 1px 5px 2px #212121;
+  display:flex;
+  align-items: start;
+}
+
+.target {
+  border-width: 2px;
+  margin-top: 0;
+  animation: border-glow 2s linear infinite;
+}
+
+@keyframes border-glow {
+  0% {
+    border-color: #0EAA66;
+  }
+
+  50% {
+    border-color: #eee;;
+  }
+
+  100% {
+    border-color: #0EAA66;
+  }
+}
+
+.clickable,
+.selected {
+  cursor: pointer;
+}
+.clickable:hover {
+  border-color: #3BCEAC;
+  border-width: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px
+}
+
+.left, .right {
+  flex-grow: 1;
+}
+
+.right {
+  position: relative;
+  align-self: stretch;
+}
+
+.record_id {
+  color: #BBB;
+  text-align: right;
+  font-size: 12px;
+  margin-right: 4px;
+  margin-bottom: 6px;
+}
+.record_id span {
+  display: inline-block;
+  padding-right: 4px;
+}
+.active .record_id {
+  color: #FFDF75;
+}
+
+.right_list_wrap {
+  position: absolute;
+  bottom: 0;
+  right: 4px;
+}
+
+.field {
+  margin-bottom: 6px;
+}
+.field label  {
+  color: #aa91aF;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+.record_id  {
+  color: #aaa;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: bold;
+}
+.phone {
+  font-weight: bold;
+}
+
+.phone,
+.address {
+  max-width: 150px;
+}
+
+.size_label {
+  display: inline-block;
+  width: 44px;
+}

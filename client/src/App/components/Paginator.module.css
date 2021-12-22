@@ -1,0 +1,43 @@
+.container {
+}
+.page_controls {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page_display {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ccc;
+  margin-bottom: 12px;
+}
+.button_container {
+  display: flex;
+  width: 88px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.pager_button {
+  min-width: 24px;
+  cursor: pointer;
+  text-align:center;
+  font-family: ui-rounded;
+  font-size: 16px;
+  font-weight: 900;
+  border-collapse: collapse;
+  border: 2px solid #aaa;
+  color: #aaa;
+  border-radius: 2px;
+}
+
+.pager_button:hover {
+  background-color: #433F52;
+  user-select: none;
+}
+
+.page_input {
+  width: 24px;
+  text-align:center;
+  display:inline-block;
+}
