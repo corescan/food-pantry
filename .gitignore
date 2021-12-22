@@ -1,3 +1,5 @@
+client/build
+server/www/*
 logs
 */node_modules
 pgAdmin
@@ -6,5 +8,5 @@ pgAdmin
 .vscode
 DATA_AUDIT.MD
 
-server/www
 exports_for_stuart
+auth.md
