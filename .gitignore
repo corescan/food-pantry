@@ -1,0 +1,10 @@
+logs
+*/node_modules
+pgAdmin
+
+.DS_STORE
+.vscode
+DATA_AUDIT.MD
+
+server/www
+exports_for_stuart

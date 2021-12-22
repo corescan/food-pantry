@@ -1,0 +1,45 @@
+version: '3.8'
+
+# Services
+services:
+
+  # PostgreSQL
+  postgres:
+    image: postgres:14.0
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/var/log/postgresql
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    hostname: postgres
+    volumes:
+      - ./logs/postgresql:/var/log/postgresql
+      - food-pantry-data:/var/lib/postgresql/data
+
+  # pgadmin:
+  #   container_name: pgadmin4
+  #   image: dpage/pgadmin4
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #   #   - POSTGRES_HOST_AUTH_METHOD=trust
+  #     - PGADMIN_DEFAULT_EMAIL=csorescan@gmail.com
+  #     - PGADMIN_DEFAULT_PASSWORD=admin
+  #   hostname: pgadmin
+  #   volumes:
+  #     - ./pgAdmin:/var/lib/pgadmin/
+
+  app:
+    image: node:17
+    command: sh -c "npm install && npm run start"
+    working_dir: /server
+    ports:
+      - 9000:9000
+    volumes:
+      - ./server:/server
+    depends_on:
+      - postgres
+
+volumes:
+  food-pantry-data:
