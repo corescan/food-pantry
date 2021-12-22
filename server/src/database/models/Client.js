@@ -20,9 +20,10 @@ class Client {
         this.thisfamilycount = numOrNull(props.thisfamilycount);
         this.youthcount = numOrNull(props.youthcount);
         this.eldercount = numOrNull(props.eldercount);
-
         this.address = props.address === 'NULL' ? null : props.address;
-        this.active = props.active || false;
+
+        this.mapped = false;
+        this.active = true;
     }
 
     getValues() {

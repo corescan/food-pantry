@@ -3,7 +3,13 @@ const Client = require('../models/Client');
 
 const sql = {
     FETCH_ALL_CLIENTS: `SELECT * FROM ${TABLES.CLIENTS}`,
-    FETCH_ALL_MAPS: `SELECT * FROM ${TABLES.ID_MAP}`
+    FETCH_ALL_MAPS: `SELECT * FROM ${TABLES.ID_MAP}`,
+    FLAG_INACTIVE: `UPDATE clients SET active = false WHERE id IN
+    (SELECT client_id FROM registrations 
+     WHERE create_date < '06/29/2021'::date AND client_id IS NOT null)
+     AND id NOT IN
+    (SELECT client_id FROM registrations 
+     WHERE create_date >= '06/29/2021'::date AND client_id IS NOT null);`
 }
 
 function sqlValueTemplate(arr) {
@@ -98,5 +104,6 @@ module.exports = {
     updateClient: updateClient,
     resolveClients: resolveClients,
     fetchAllMaps: async () => query(sql.FETCH_ALL_MAPS),
-    fetchAllClients: async () => query(sql.FETCH_ALL_CLIENTS)
+    fetchAllClients: async () => query(sql.FETCH_ALL_CLIENTS),
+    flagInactive: async () => query(sql.FLAG_INACTIVE)
 }

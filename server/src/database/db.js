@@ -20,7 +20,6 @@ const pool = new pg.Pool({
 
 const TABLES = {
     CLIENTS: 'clients',
-    GOOD_CLIENTS: 'good_clients',
     REGISTRATIONS: 'registrations',
     ID_MAP: 'client_id_map'
 };

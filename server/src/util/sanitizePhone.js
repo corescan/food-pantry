@@ -1,5 +1,5 @@
 module.exports = function sanitizePhone(phone) {
-  if (phone && phone.toLowerCase() === 'null') {
+  if (!phone || phone.toLowerCase() === 'null') {
     return null;
   }
   phone = phone.replace(/[()-\s]/g,'');
