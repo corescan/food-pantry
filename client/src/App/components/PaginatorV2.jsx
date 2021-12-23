@@ -15,7 +15,7 @@ export default function Paginator({ items, itemsPerPage, renderItem }) {
       setCurrentPage(pageCount);
       setInputVal(pageCount);
     }
-  }, [items, itemsPerPage]);
+  }, [pageCount, currentPage]);
 
   // Left arrow button
   useEffect(() => {
