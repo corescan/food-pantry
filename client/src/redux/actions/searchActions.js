@@ -1,6 +1,7 @@
 import Fuse from 'fuse.js';
 import {
   UPDATE_SEARCH_FILTER,
+  UPDATE_GLOBAL_SEARCH_FILTER,
   UPDATE_SEARCH_RESULTS,
   UPDATE_SEARCH_INDEX
 } from './types/searchTypes';
@@ -8,6 +9,12 @@ import {
 export const updateSearchFilters = filters => {
   return async (dispatch) => {
       dispatch({ type: UPDATE_SEARCH_FILTER, payload: filters })
+  }
+}
+
+export const updateGlobalFilters = filters => {
+  return async (dispatch) => {
+      dispatch({ type: UPDATE_GLOBAL_SEARCH_FILTER, payload: filters })
   }
 }
 

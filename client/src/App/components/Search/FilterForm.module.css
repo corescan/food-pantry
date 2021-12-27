@@ -1,6 +1,6 @@
 .form {
-  width: 248px;
-  box-sizing: content-box;
+  box-sizing: border-box;
+  width: 560px;
   padding: 8px;
   border: 2px solid #AAA;
   border-radius: 3px;
@@ -23,14 +23,24 @@
   border-radius: 3px;
   color: #eee;
 }
-.list li {
+.filtersContainer {
+  display: flex;
+}
+.filters {
+  width: 248px;
+}
+.filtersContainer li {
   display: flex;
   align-items: center;
 }
-.list li:not(:last-child) {
+.filters li:not(:last-child) {
   margin-bottom: 8px;
 }
-.list li:last-child {
+.filters li:last-child {
   margin-bottom: 3px;
 }
 
+.moreFilters {
+  padding-left: 24px;
+  flex-grow: 1;
+}

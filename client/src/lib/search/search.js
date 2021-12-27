@@ -1,3 +1,6 @@
+
+// DEPRECATED / UNUSED
+
 export default function search(records, filterState) {
   const filterFns = getFilterFunctions(filterState);
   let searchResults = [];

@@ -5,12 +5,13 @@ import css from './SearchResults.module.css';
 
 export default function SearchResults() {
   const dispatch = useDispatch();
-  const { selection, results, filters } = useSelector(
+  const { selection, results, filters, globalFilters } = useSelector(
     ({ searchReducer, clientReducer }) => {
       return {
         selection: clientReducer.selection,
         results: searchReducer.results,
-        filters: searchReducer.filters
+        filters: searchReducer.filters,
+        globalFilters: searchReducer.globalFilters
       }
     }
   );
@@ -21,7 +22,9 @@ export default function SearchResults() {
   // TO DO filter out MAPPED clients from the search results
   const selectedIDs = (selection && selection.map(_r => _r.id)) || [];
   const searchActive = Object.values(filters).reduce((isActive, filter) => isActive || filter.enabled, false);
-  const displayedResults = results && results.filter(_r => !selectedIDs.includes(_r.id));
+  const displayedResults = results && 
+    results.filter(_r => !selectedIDs.includes(_r.id))
+    .filter(_r => globalFilters.active ? _r.active : true);
 
   return (
     <div className={css.container}>

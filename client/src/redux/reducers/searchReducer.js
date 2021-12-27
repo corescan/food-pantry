@@ -1,6 +1,7 @@
 import makeFilterState from '../../lib/search/makeFilterState';
 import { 
   UPDATE_SEARCH_FILTER,
+  UPDATE_GLOBAL_SEARCH_FILTER,
   UPDATE_SEARCH_INDEX,
   UPDATE_SEARCH_RESULTS
 } from '../actions/types/searchTypes';
@@ -8,6 +9,9 @@ import {
 const initialState = {
   results: null,
   filters: makeFilterState(),
+  globalFilters: {
+    active: true
+  },
   index: {}
 };
 
@@ -16,6 +20,11 @@ const searchReducer = (state = initialState, action) => {
     case UPDATE_SEARCH_FILTER: return { 
       ...state,  
       filters: mergeFilterState(state, action.payload),
+    };
+
+    case UPDATE_GLOBAL_SEARCH_FILTER: return { 
+      ...state,  
+      globalFilters: action.payload,
     };
 
     case UPDATE_SEARCH_RESULTS: return {
