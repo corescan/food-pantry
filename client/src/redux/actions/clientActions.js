@@ -40,7 +40,7 @@ export const resolveClients = (payload) => {
     const clients = payload.find(msg => msg.type === 'UPDATE_CLIENT');
     insertMapping(mapping)(dispatch);
     updateClients(clients)(dispatch);
-    clearSelection();
+    clearSelection()(dispatch);
   }
 }
 
