@@ -4,6 +4,7 @@ import {
   RECEIVE_MAPPING,
   ADD_TO_SELECTION,
   REMOVE_FROM_SELECTION,
+  CLEAR_SELECTION,
   SWAP_SELECTION_AND_TARGET,
   INSERT_MAPPING,
   SET_TARGET
@@ -39,6 +40,7 @@ export const resolveClients = (payload) => {
     const clients = payload.find(msg => msg.type === 'UPDATE_CLIENT');
     insertMapping(mapping)(dispatch);
     updateClients(clients)(dispatch);
+    clearSelection();
   }
 }
 
@@ -51,6 +53,12 @@ export const addToSelection = record => {
 export const removeFromSelection = record => {
   return async (dispatch) => {
       dispatch({ type: REMOVE_FROM_SELECTION, payload: record })
+  }
+}
+
+export const clearSelection = () => {
+  return async (dispatch) => {
+    dispatch({ type: CLEAR_SELECTION })
   }
 }
 

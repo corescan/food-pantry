@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateSearchFilters } from '../../../redux/actions/searchActions';
+import { clearSelection } from '../../../redux/actions/clientActions';
 import ProgressBar from '../../components/ProgressBar';
 import ClientList from '../../components/ClientList';
 import css from './StartView.module.css';
@@ -33,6 +34,7 @@ export default function StartView() {
 
   const handleClientClick = client => {
     updateSearchFilters(makeFilterState(client))(dispatch);
+    clearSelection()(dispatch);
     nav(`/resolve/${client.id}`);
   }
 

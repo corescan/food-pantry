@@ -4,6 +4,7 @@ import {
     RECEIVE_MAPPING,
     ADD_TO_SELECTION,
     REMOVE_FROM_SELECTION,
+    CLEAR_SELECTION,
     SWAP_SELECTION_AND_TARGET,
     INSERT_MAPPING,
     SET_TARGET
@@ -74,6 +75,13 @@ const clientReducer = (state = initialState, action) => {
             };
         }
 
+        case CLEAR_SELECTION: {
+            return {
+                ...state,
+                selection: [],
+            };
+        }
+
         case SWAP_SELECTION_AND_TARGET: {
             const updatedSel = findAndRemove(action.payload, state.selection)
                 .concat([state.target]);
@@ -88,8 +96,7 @@ const clientReducer = (state = initialState, action) => {
         case SET_TARGET: {
             return {
                 ...state,
-                target: action.payload,
-                selection: []
+                target: action.payload
             }
         }
 
