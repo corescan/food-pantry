@@ -1,5 +1,5 @@
 const {query, TABLES} = require('../db');
-const Registration = require('../models/Registration');
+const Registration = require('../db/models/Registration');
 
 async function insertRegistration(values) {
     let valStr = '';

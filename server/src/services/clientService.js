@@ -1,5 +1,5 @@
 const {pool, query, TABLES, TX} = require('../db');
-const Client = require('../models/Client');
+const Client = require('../db/models/Client');
 
 const sql = {
     FETCH_ALL_CLIENTS: `SELECT * FROM ${TABLES.CLIENTS}`,

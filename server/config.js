@@ -12,5 +12,8 @@ module.exports = {
     },
     data: {
         date: 'dec-22-2021'
+    },
+    report: {
+        filename: 'client_id_map-CURRENT_TIME.csv'
     }
 }

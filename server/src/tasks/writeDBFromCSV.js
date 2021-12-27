@@ -1,11 +1,13 @@
 const csv = require('csv-parser');
 const path = require('path');
 const fs = require('fs');
-const Client = require('../database/models/Client');
-const Registration = require('../database/models/Registration');
-const { insertClient, flagInactive } = require('../database/services/clientService');
-const { insertRegistration } = require('../database/services/registrationService');
+const Client = require('../db/models/Client');
+const Registration = require('../db/models/Registration');
+const { insertClient, flagInactive } = require('../services/clientService');
+const { insertRegistration } = require('../services/registrationService');
+
 const { data } = require('../../config');
+const dataFolder = '../../system/data';
 
 module.exports =  async function writeDBFromCSV() {
     return writeClients()
@@ -19,7 +21,7 @@ module.exports =  async function writeDBFromCSV() {
 function writeClients() {
     return new Promise(res => {
         let clientTotal = 0;
-        fs.createReadStream(path.resolve(__dirname, `../../data/${data.date}/clients.csv`))
+        fs.createReadStream(path.resolve(__dirname, `${dataFolder}/${data.date}/clients.csv`))
             .pipe(csv())
             .on('data', async row => {
                 const client = new Client(row);
@@ -42,7 +44,7 @@ function writeClients() {
 function writeRegistrations() {
     return new Promise(res => {
         let registrationTotal = 0;
-        fs.createReadStream(path.resolve(__dirname, `../../data/${data.date}/registrations.csv`))
+        fs.createReadStream(path.resolve(__dirname, `${dataFolder}/${data.date}/registrations.csv`))
             .pipe(csv())
             .on('data', async row => {
                 const reg = new Registration(row);

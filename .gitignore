@@ -1,12 +1,12 @@
+*/node_modules
 client/build
 server/www/*
+server/system/report/*
+!server/system/report/.empty
 logs
-*/node_modules
 pgAdmin
 
 .DS_STORE
 .vscode
 DATA_AUDIT.MD
-
-exports_for_stuart
 auth.md

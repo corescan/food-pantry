@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const controller = require('../database/services/clientService');
+const clientService = require('../services/clientService');
 
 const clientController = Router();
 
 module.exports = app => app.use('/api/clients', clientController);
 
 clientController.get('/', async (req, res) => {
-    const clients = (await controller.fetchAllClients()).rows;
+    const clients = (await clientService.fetchAllClients()).rows;
     res.json({ type: 'CLIENTS', size: clients.length, payload: clients });
 });
 
@@ -17,7 +17,7 @@ clientController.post('/resolve', async (req, res) => {
     const { true_id, duplicate_ids } = req.body;
     let result;
     try {
-        result = await controller.resolveClients(true_id, duplicate_ids);
+        result = await clientService.resolveClients(true_id, duplicate_ids);
     } catch(err) {
         res.statusCode = 500;
         res.json({
@@ -50,6 +50,6 @@ clientController.post('/resolve', async (req, res) => {
 });
 
 clientController.get('/map', async (req, res) => {
-    const mapping = (await controller.fetchAllMaps()).rows;
+    const mapping = (await clientService.fetchAllMaps()).rows;
     res.json({ type: 'ID_MAP', size: mapping.length, payload: mapping })
 });
