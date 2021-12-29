@@ -1,0 +1,17 @@
+.container {
+  padding: 27px;
+}
+
+.count {
+  color: #aaa;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.target{
+  margin-bottom: 27px;
+}
+
+.duplicates {
+
+}

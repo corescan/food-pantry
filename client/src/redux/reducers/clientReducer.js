@@ -19,7 +19,6 @@ const initialState = {
 
 const processMapping = payload => {
     const mapping = {};
-    console.log(payload);
     payload.forEach(map => {
         let dupes = mapping[map.true_id];
         if (!dupes) {

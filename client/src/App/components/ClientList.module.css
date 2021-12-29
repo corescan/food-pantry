@@ -33,6 +33,10 @@
   color: #FFDF75;
 }
 
+.id.invalid {
+  color: #E01541;
+}
+
 .name {
   width: 181px;
   color: #ddd;

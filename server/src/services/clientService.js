@@ -3,6 +3,7 @@ const Client = require('../db/models/Client');
 
 const sql = {
     FETCH_ALL_CLIENTS: `SELECT * FROM ${TABLES.CLIENTS}`,
+    FETCH_CLIENT_BY_ID: `SELECT * FROM ${TABLES.CLIENTS} WHERE id = $1`,
     FETCH_ALL_MAPS: `SELECT * FROM ${TABLES.ID_MAP}`,
     FLAG_INACTIVE: `UPDATE clients SET active = false WHERE id IN
     (SELECT client_id FROM registrations 
@@ -105,5 +106,6 @@ module.exports = {
     resolveClients: resolveClients,
     fetchAllMaps: async () => query(sql.FETCH_ALL_MAPS),
     fetchAllClients: async () => query(sql.FETCH_ALL_CLIENTS),
+    fetchClientByID: async (id) => query(sql.FETCH_CLIENT_BY_ID, [id]),
     flagInactive: async () => query(sql.FLAG_INACTIVE)
 }

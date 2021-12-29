@@ -15,7 +15,28 @@ clientController.get('/', async (req, res) => {
  */
 clientController.post('/resolve', async (req, res) => {
     const { true_id, duplicate_ids } = req.body;
+    const clientIDs = [true_id, ...duplicate_ids];
     let result;
+
+    // VERIFY VALID IDs
+    try {
+        for (_i in clientIDs) {
+            let output = await clientService.fetchClientByID(clientIDs[_i]);
+            if ((!output || !output.rows) || output.rows.length === 0) {
+                throw new Error(`ID ${clientIDs[_i]} is not a valid client ID.`);
+            }
+        }
+    } catch(err) {
+        res.statusCode = 406;
+        res.json({
+            type: 'ERROR',
+            message: `There was an error with the submission:  "${err.message}"`,
+            payload: err
+        });
+        return;
+    }
+
+    // INSERT MAPPINGS TO DATABASE
     try {
         result = await clientService.resolveClients(true_id, duplicate_ids);
     } catch(err) {

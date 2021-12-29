@@ -32,3 +32,28 @@
 .space {
   height: 22px;
 }
+
+.button {
+  align-self: start;
+  cursor: pointer;
+  color: #414141;
+  background-color: #CCC;
+  font-size: 10px;
+  height: 36px;
+  width: 128px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  border: 2px solid #aaa;
+  border-radius: 2px;
+  overflow:hidden;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.button:hover{
+  border: 2px solid #ddd;
+  background-color: #AAA;
+  color: #eee;
+}

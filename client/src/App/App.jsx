@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ResolutionView from './views/Resolution/ResolutionView';
 import ClientAPI from '../API/ClientAPI';
 import { receiveClients, receiveMaps  } from '../redux/actions/clientActions';
 import css from './App.module.css';
+
 import StartView from './views/Start/StartView';
+import ResolutionView from './views/Resolution/ResolutionView';
+import MappingView from './views/MappingView/MappingView';
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class App extends Component {
           <Routes>
             <Route path='/' exact element={<StartView />} />
             <Route path='/resolve/:clientId' exact element={<ResolutionView />} />
+            <Route path='/mapping/:trueId' element={<MappingView />} />
+            <Route path='/mapping' element={<MappingView />} />
           </Routes>
         </BrowserRouter>
       </div>
