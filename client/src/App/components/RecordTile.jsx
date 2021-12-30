@@ -10,7 +10,8 @@ export default function RecordTile(props) {
       [css.target]: props.target,
       [css.selected]: props.selected,
       [css.clickable]: !!props.onClick,
-      [css.active]: record.active
+      [css.active]: record.active && !record.invalid,
+      [css.invalid]: record.invalid
       })}
       onClick={onClick}
     >

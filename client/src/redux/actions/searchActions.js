@@ -80,8 +80,6 @@ export const updateSearchResults = (index, target, filterState) => {
 }
 
 export const updateSearchIndex = clients => {
-  // search only unmapped clients
-  clients = clients.filter(_c => !_c.mapped);
   
   const fullnameIndex = new Fuse(clients.map(_c => { 
     return Object.assign(_c, {
@@ -108,9 +106,7 @@ export const updateSearchIndex = clients => {
     threshold: 0.1,
     keys: ['phone'],
   });
-  const addressIndex = new Fuse(clients.map(_c => { 
-    return {id: _c.id, address: _c.address}
-  }), {
+  const addressIndex = new Fuse(clients, {
     includeScore: true,
     threshold: 0.3,
     keys: ['address'],

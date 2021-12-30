@@ -3,7 +3,7 @@ client/build
 server/www/*
 server/system/report/*
 !server/system/report/.empty
-xls_files
+misc_files
 notes
 logs
 pgAdmin
