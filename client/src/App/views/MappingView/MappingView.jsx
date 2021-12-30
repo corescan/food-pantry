@@ -8,16 +8,19 @@ import RecordTile from '../../components/RecordTile';
 import ClientList from '../../components/ClientList';
 
 const findClient = (id, clients) => {
-  const record = clients.find(_c => _c.id === id);
-  return record || {
-    id: id,
-    firstname: null,
-    lastname: 'INVALID ID',
-    phone: null,
-    address: null,
-    active: null,
-    invalid: true
+  let record = clients.find(_c => _c.id === id);
+  if (!record && !isNaN(id)) {
+    record = {
+      id: id,
+      firstname: null,
+      lastname: 'INVALID ID',
+      phone: null,
+      address: null,
+      active: null,
+      invalid: true
+    }
   }
+  return record;
 }
 
 const validateIDs = (idList, clientList) => {
@@ -84,7 +87,7 @@ export default function MappingView() {
 
   return (
     <div className={css.container}>
-      <div>
+      <div className={css.showInvalid}>
         <input
           id='show-invalid-only'
           type='checkbox'
