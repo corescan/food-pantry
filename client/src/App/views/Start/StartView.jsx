@@ -40,18 +40,8 @@ export default function StartView() {
 
   const handleCheckbox = () => setIsChecked(!isChecked);
 
-  const handleReviewMappingNav = () => {
-    nav(`/mapping`);
-  };
-
   return (
     <div className={css.container}>
-      <button
-        className={css.button}
-        onClick={handleReviewMappingNav}
-      >
-        Review Mappings
-      </button>
       <ProgressBar total={activeCount} complete={activeMappedCount} />
       <div className={css.space} />
       <ProgressBar total={inactiveCount} complete={inactiveMappedCount} color='#999' />

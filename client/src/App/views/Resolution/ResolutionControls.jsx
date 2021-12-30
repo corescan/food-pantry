@@ -27,19 +27,17 @@ export default function ResolutionControls() {
      */
     // try API to resolve clients in DB
     ClientAPI.resolveClients(target, selection)
-      .then(payload => {
+      .then(async (payload) => {
         const user_update = payload.find(_d => _d.type === 'UPDATE_CLIENT');
         const size = (user_update && user_update.size) || -1;
         toast.success(`Resolved ${size} client${size === 1 ? '':'s'}`)
-        console.log('UI received payload', payload);
-        // on success, use API response to match data in redux
-        resolveClients(payload)(dispatch);
+        await resolveClients(payload)(dispatch);
 
     /**
      * LOAD NEXT TARGET
      */
         // find the next unmapped & active client
-        const nextTarget = clients.find(_c => !_c.mapped && _c.active);
+        const nextTarget = clients.find(_c => !_c.mapped && _c.active && _c.id !== target.id);
         // adjust filters to this client
         updateSearchFilters(makeFilterState(nextTarget))(dispatch);
         // navigate
