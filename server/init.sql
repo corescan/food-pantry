@@ -38,3 +38,6 @@ CREATE TABLE registrations (
 -- RESET CLIENTS 
 -- UPDATE clients set (mapped, permanent) = (false, null) WHERE id IN (SELECT id FROM clients WHERE mapped = true);
 -- DELETE FROM client_id_map;
+
+ALTER TABLE client_id_map ADD CONSTRAINT fk_client_id_true FOREIGN KEY (true_id) REFERENCES clients(id);
+ALTER TABLE client_id_map ADD CONSTRAINT fk_client_id_dupe FOREIGN KEY (duplicate_id) REFERENCES clients(id);

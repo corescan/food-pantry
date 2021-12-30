@@ -23,11 +23,11 @@ export default function ResolutionView() {
   useEffect(() => {
     const id = Number(clientId);
     let client = allClients.find(_c => _c.id === id);
-    if (client && client.mapped) {
-      // find next unmapped client if this clientId is already mapped.
-      client = allClients.find(_c => !_c.mapped && _c.active);
-      nav(`/resolve/${target.id}`);
-    }
+    // if (client && client.mapped) {
+    //   // find next unmapped client if this clientId is already mapped.
+    //   client = allClients.find(_c => !_c.mapped && _c.active);
+    //   nav(`/resolve/${target.id}`);
+    // }
     setTarget(client)(dispatch);
   }, [clientId, target, allClients, dispatch, nav])
 
