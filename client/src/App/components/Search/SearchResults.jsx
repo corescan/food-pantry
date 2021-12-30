@@ -1,10 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import ClientList from '../ClientList';
 import { addToSelection } from '../../../redux/actions/clientActions';
 import css from './SearchResults.module.css';
 
 export default function SearchResults() {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+  const searchAll = searchParams.get('searchAll')
+  console.log('SEARCHALL', searchAll);
+
   const { selection, results, filters, globalFilters } = useSelector(
     ({ searchReducer, clientReducer }) => {
       return {
@@ -24,7 +30,8 @@ export default function SearchResults() {
   const searchActive = Object.values(filters).reduce((isActive, filter) => isActive || filter.enabled, false);
   const displayedResults = results && 
     results.filter(_r => !selectedIDs.includes(_r.id))
-    .filter(_r => globalFilters.active ? _r.active : true);
+    .filter(_r => globalFilters.active ? _r.active : true)
+    .filter(_r => searchAll || !_r.mapped);
 
   return (
     <div className={css.container}>

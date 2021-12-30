@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useKeyPress from '../../../lib/hooks/useKeyPress';
 import css from './MappingView.module.css';
@@ -20,10 +20,19 @@ const findClient = (id, clients) => {
   }
 }
 
+const validateIDs = (idList, clientList) => {
+  let valid = true;
+  idList.forEach(id => {
+    valid = clientList.findIndex(_c => _c.id === id) > -1 && valid;
+  })
+  return valid;
+}
+
 export default function MappingView() {
   const nav = useNavigate();
-  const trueId = Number(useParams().trueId);
-  const { clients, mapping = [] } = useSelector(({ clientReducer }) => { 
+  const [ showInvalidOnly, setShowInvalidOnly ] = useState(true);
+  const trueID = Number(useParams().trueId);
+  const { clients = [], mapping = {} } = useSelector(({ clientReducer }) => { 
     return {
       clients: clientReducer.allClients,
       mapping: clientReducer.mapping
@@ -32,8 +41,17 @@ export default function MappingView() {
   const upPress = useKeyPress("ArrowUp");
   const downPress = useKeyPress("ArrowDown");
 
-  const trueIDs = Object.keys(mapping).map(key => Number(key)).sort((a,b) => a > b ? 1 : -1);
-  const currentIndex = trueIDs.indexOf(trueId);
+  const mapArray = Object.keys(mapping).map(key => {
+    return {
+      trueID: Number(key),
+      dupeIDs: mapping[key]
+    }
+  });
+
+  const visibleMapArray = showInvalidOnly ? (mapArray).filter(_m => !validateIDs([_m.trueID, ..._m.dupeIDs], clients)) : mapArray;
+
+  const trueIDs = visibleMapArray.map(_m => Number(_m.trueID)).sort((a,b) => a > b ? 1 : -1);
+  const currentIndex = trueIDs.indexOf(trueID);
 
   useEffect(() => {
     if (downPress && currentIndex > 0) {
@@ -47,17 +65,36 @@ export default function MappingView() {
     }
   }, [upPress]);
 
-  if ((!trueId || isNaN(trueId) || trueId === 0) && trueIDs.length > 0) {
-    let redirectId = trueIDs[0];
+  useEffect(() => {
+    nav('/mapping');
+  }, [showInvalidOnly]);
+
+  const handleShowInvalidClick = () => {
+    setShowInvalidOnly(!showInvalidOnly);
+  }
+
+  if ((!trueID || isNaN(trueID) || trueID === 0) && trueIDs.length > 0) {
+    const redirectId = trueIDs[0];
     return (<Navigate replace to={`/mapping/${redirectId}`} />);
   }
   
-  const permanentClient = clients.find(_c => _c.id === trueId);
-  const dupIDs = mapping && mapping[trueId];
-  const clientList = dupIDs && dupIDs.map(id => findClient(id, clients));
+  const permanentClient = findClient(trueID, clients);
+  const dupIDs = mapping && mapping[trueID];
+  const dupeRecords = dupIDs && dupIDs.map(id => findClient(id, clients));
 
   return (
     <div className={css.container}>
+      <div>
+        <input
+          id='show-invalid-only'
+          type='checkbox'
+          checked={showInvalidOnly}
+          onClick={handleShowInvalidClick}
+        />
+        <label for='show-invalid-only'>
+          Show invalid only
+        </label>
+      </div>
       {permanentClient ?
         <>
           <div className={css.count}>
@@ -71,10 +108,10 @@ export default function MappingView() {
           </div>
         </>
         : void 0}
-      {clientList ?
+      {dupeRecords ?
         <div className={css.duplicates}>
           <ClientList
-            clients={clientList}
+            clients={dupeRecords}
           />
         </div>
       : void 0}

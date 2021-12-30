@@ -66,6 +66,9 @@
 .active .record_id {
   color: #FFDF75;
 }
+.invalid .record_id {
+  color: #E01541;
+}
 
 .right_list_wrap {
   position: absolute;
