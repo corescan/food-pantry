@@ -25,9 +25,13 @@ clientController.post('/resolve', async (req, res) => {
             if ((!output || !output.rows) || output.rows.length === 0) {
                 throw new Error(`ID ${clientIDs[_i]} is not a valid client ID.`);
             }
+            if (output.rows.length && output.rows[0].mapped === true) {
+                let record = output.rows[0];
+                throw new Error(`Client ID ${record.id}, ${record.firstname} ${record.lastname}, has already been resolved.`);
+            }
         }
     } catch(err) {
-        res.statusCode = 406;
+        res.statusCode = 400;
         res.json({
             type: 'ERROR',
             message: `There was an error with the submission:  "${err.message}"`,

@@ -4,6 +4,7 @@ server/www/*
 server/system/report/*
 !server/system/report/.empty
 xls_files
+notes
 logs
 pgAdmin
 

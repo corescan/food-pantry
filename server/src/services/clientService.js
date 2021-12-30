@@ -35,7 +35,7 @@ async function insertClient(table, values) {
 // }
 
 async function insertMappings(true_id, dupe_ids, dbClient) {
-    let values = [true_id].concat(dupe_ids);
+    let values = [true_id, ...dupe_ids];
     const valueTemplate = dupe_ids.map((_id, index) => `($1, $${index + 2})`).join(',');
     const sql = `INSERT INTO ${TABLES.ID_MAP} (true_id, duplicate_id) VALUES ${valueTemplate} RETURNING *`;
     let queryFn = dbClient ? dbClient.query : query;
@@ -69,28 +69,38 @@ async function resolveClients(true_id, duplicate_ids) {
     /**
      * Transaction: insert maps, update users.
      * */
-    const client = await pool.connect();
+    const dbClient = await pool.connect();
     try {
-        await client.query(TX.BEGIN);
+        await dbClient.query(TX.BEGIN);
         if (duplicate_ids && duplicate_ids.length) {
-            mappingsResult = await insertMappings(true_id, duplicate_ids, client);
+            mappingsResult = await insertMappings(true_id, duplicate_ids, dbClient);
+            
+            // Use result of mapping to insert to UPDATE each duplicate clients as mapped
+            mappingsResult.rows.forEach(async (mapping) => {
+                const id = mapping.duplicate_id;
+                let result = await updateClient(id, { mapped: true, permanent: false }, dbClient);
+                if (result && result.rowCount === 0) {
+                    throw new Error(`Client ID ${permanent_id} does not exist.`);
+                }
+                clientUpdates.push(result.rows && result.rows[0]);
+            });
         }
+
         // UPDATE permanent client as mapped
-        let result = await updateClient(true_id, { mapped: true, permanent: true }, client);
+        let permanent_id = mappingsResult ? mappingsResult.rows[0].true_id : true_id;
+        let result = await updateClient(permanent_id, { mapped: true, permanent: true }, dbClient);
+        if (result && result.rowCount === 0) {
+            throw new Error(`Client ID ${permanent_id} does not exist.`);
+        }
         clientUpdates.push(result.rows && result.rows[0]);
 
-        // UPDATE each nonpermanent (duplicate) clients as mapped
-        duplicate_ids.forEach(async (id) => {
-            result = await updateClient(id, { mapped: true, permanent: false }, client);
-            clientUpdates.push(result.rows && result.rows[0]);
-        });
-        await client.query(TX.COMMIT);
+        await dbClient.query(TX.COMMIT);
     } catch (err) {
-        await client.query(TX.ROLLBACK);
+        await dbClient.query(TX.ROLLBACK);
         console.error(err);
         throw err;
     } finally {
-        client.release();
+        dbClient.release();
     }
 
     return {
