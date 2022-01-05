@@ -18,6 +18,10 @@ export default function Header() {
           text='Review Mappings'
           onClick={() => nav(`/mapping`)}
         />
+        <Button
+          text='Download CSV'
+          onClick={() => window.open('/system/report')}
+        />
       </div>
     </header>
   )

@@ -13,6 +13,8 @@ systemController.get('/write-database', (req,res) => {
 });
 
 systemController.get('/report', async (req,res) => {
+  const { fetchAll } = req.query;
+
   // gen csv
   const jsDate = new Date();
 
@@ -29,7 +31,7 @@ systemController.get('/report', async (req,res) => {
   const dateTime = date.join('-') + '__' + time.join('');
   const filename = config.report.filename.replace('CURRENT_TIME', dateTime);
   
-  generateMappingCSV(filename)
+  generateMappingCSV(filename, fetchAll)
     .then(() => {
       // download csv
       const filepath = path.join(__dirname, `../../system/report/${filename}`);

@@ -42,3 +42,4 @@ CREATE TABLE registrations (
 ALTER TABLE client_id_map ADD CONSTRAINT fk_client_id_true FOREIGN KEY (true_id) REFERENCES clients(id);
 ALTER TABLE client_id_map ADD CONSTRAINT fk_client_id_dupe FOREIGN KEY (duplicate_id) REFERENCES clients(id);
 
+ALTER TABLE client_id_map ADD COLUMN exported boolean default false;

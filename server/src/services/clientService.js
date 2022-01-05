@@ -4,7 +4,8 @@ const Client = require('../db/models/Client');
 const sql = {
     FETCH_ALL_CLIENTS: `SELECT * FROM ${TABLES.CLIENTS}`,
     FETCH_CLIENT_BY_ID: `SELECT * FROM ${TABLES.CLIENTS} WHERE id = $1`,
-    FETCH_ALL_MAPS: `SELECT * FROM ${TABLES.ID_MAP}`,
+    FETCH_MAPS_ALL: `SELECT * FROM ${TABLES.ID_MAP} ORDER BY true_id`,
+    FETCH_MAPS_NOT_EXPORTED: `SELECT * FROM ${TABLES.ID_MAP} WHERE exported = false ORDER BY true_id`,
     FLAG_INACTIVE: `UPDATE clients SET active = false WHERE id IN
     (SELECT client_id FROM registrations 
      WHERE create_date < '06/29/2021'::date AND client_id IS NOT null)
@@ -114,7 +115,8 @@ module.exports = {
     insertOneGoodClients: async (values) => insertClient(TABLES.GOOD_CLIENTS, values),
     updateClient: updateClient,
     resolveClients: resolveClients,
-    fetchAllMaps: async () => query(sql.FETCH_ALL_MAPS),
+    fetchAllMaps: async () => query(sql.FETCH_MAPS_ALL),
+    fetchMapsNotExported: async () => query(sql.FETCH_MAPS_NOT_EXPORTED),
     fetchAllClients: async () => query(sql.FETCH_ALL_CLIENTS),
     fetchClientByID: async (id) => query(sql.FETCH_CLIENT_BY_ID, [id]),
     flagInactive: async () => query(sql.FLAG_INACTIVE)
