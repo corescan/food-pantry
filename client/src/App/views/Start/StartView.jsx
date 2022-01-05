@@ -61,7 +61,6 @@ export default function StartView() {
         clients={clientList}
         onClientClick={handleClientClick}
       />
-      <hr />
     </div>
   );
 }

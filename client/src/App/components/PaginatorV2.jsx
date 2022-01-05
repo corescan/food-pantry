@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useKeyPress from '../../lib/hooks/useKeyPress';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import css from './Paginator.module.css';
 
 export default function Paginator({ items, itemsPerPage, renderItem }) {
@@ -91,7 +93,7 @@ export default function Paginator({ items, itemsPerPage, renderItem }) {
                 onClick={handlePrev}
                 className={css.pager_button}
               >
-                {'<'}
+                <FontAwesomeIcon icon={faChevronLeft} />
               </li>
               <li className={css.page_input_wrap}>
                 <input
@@ -107,7 +109,7 @@ export default function Paginator({ items, itemsPerPage, renderItem }) {
                 onClick={handleNext}
                 className={css.pager_button}
               >
-                {'>'}
+                <FontAwesomeIcon icon={faChevronRight} />
               </li>
             </ul>
           </div>
