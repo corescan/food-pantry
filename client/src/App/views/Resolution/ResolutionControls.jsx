@@ -6,6 +6,9 @@ import ClientAPI from '../../../API/ClientAPI';
 import makeFilterState from '../../../lib/search/makeFilterState';
 import { resolveClients } from '../../../redux/actions/clientActions';
 import { updateSearchFilters } from '../../../redux/actions/searchActions';
+
+import Button from '../../components/Button';
+
 import css from './ResolutionControls.module.css';
 
 export default function ResolutionControls() {
@@ -51,17 +54,11 @@ export default function ResolutionControls() {
 
   return (
     <div className={css.container} >
-      {/* <button
-        className={css.existing}
-      >
-        Add To Existing
-      </button> */}
-      <button
-        onClick={handleResolution}
+      <Button 
+        text='Resolve'
         className={css.resolve}
-      >
-        Resolve
-      </button>
+        onClick={handleResolution}
+      />
     </div>
   )
 }
